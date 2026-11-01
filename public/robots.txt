@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://armaan-sengupta.github.io/uwaterloo-gpa-calculator/sitemap.xml
+Sitemap: https://www.armaansengupta.ca/uwaterloo-gpa-calculator/sitemap.xml

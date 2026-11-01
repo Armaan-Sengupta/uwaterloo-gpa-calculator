@@ -1,4 +1,4 @@
-# [University of Waterloo GPA Calculator](https://armaan-sengupta.github.io/uwaterloo-gpa-calculator/)
+# [University of Waterloo GPA Calculator](https://www.armaansengupta.ca/uwaterloo-gpa-calculator/)
 
 This tool reads your Quest unofficial transcript PDF and calculates your cumulative GPA on the [OMSAS](https://www.ouac.on.ca/guide/omsas-gpa-calculations/) 4.0 scale, using Scale 3 of the [Undergraduate Grade Conversion Table](https://www.ouac.on.ca/guide/undergraduate-grade-conversion-table/).
 
