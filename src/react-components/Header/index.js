@@ -20,8 +20,8 @@ class Header extends React.Component{
                             <li>Go to <em><strong>Grades {'->'} My Academics {'->'} Unofficial Transcript</strong></em></li>
                             <li>Select your applicable Report Type, then click <strong>View Report</strong> and <strong>save the PDF</strong>.</li>
                             <li>
-                                <strong>Drop the PDF</strong> into the box below. Quest's copy protection is removed automatically,
-                                and the file is read entirely in your browser. Nothing is uploaded.
+                                <strong>Drop the PDF</strong> into the box below. The file is read entirely in your browser.
+                                Nothing is uploaded.
                             </li>
                         </ol>
                 </div>
