@@ -14,7 +14,7 @@ export class PdfPasswordCancelled extends Error {}
 /**
  * Extracts the text of a PDF file
  * @param {File} file The PDF chosen by the user
- * @returns {Promise<{text: string, wasRestricted: boolean}>} The text, and whether the PDF had copy restrictions
+ * @returns {Promise<string>} The text, one line per row of the page
  */
 export async function extractPdfText(file){
     const data = new Uint8Array(await file.arrayBuffer());
@@ -39,8 +39,6 @@ export async function extractPdfText(file){
         throw err;
     }
 
-    // getPermissions() is null when the PDF has no usage restrictions
-    const wasRestricted = (await pdf.getPermissions()) !== null;
     const lines = [];
     for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++){
         const page = await pdf.getPage(pageNum);
@@ -48,5 +46,5 @@ export async function extractPdfText(file){
         lines.push(...itemsToLines(content.items));
     }
     await pdf.destroy();
-    return { text: lines.join("\n"), wasRestricted };
+    return lines.join("\n");
 }

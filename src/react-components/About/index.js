@@ -18,7 +18,8 @@ class About extends React.Component{
     render(){
         return(
             <section className="about">
-                <h2 className="about-header">How your GPA is calculated</h2>
+                <details>
+                <summary><h2 className="about-header">How your GPA is calculated</h2></summary>
                 <p>
                     The University of Waterloo doesn't use a 4.0 GPA. Quest reports percentage grades and a cumulative average.
                     This calculator follows the method <a href="https://www.ouac.on.ca/guide/omsas-gpa-calculations/">OMSAS</a> uses
@@ -41,7 +42,7 @@ class About extends React.Component{
                     <li>The cumulative GPA is the total weighted grade points divided by the total units. It is not an average of term GPAs.</li>
                 </ol>
                 <p>
-                    The unweighted average is the plain mean of the same courses' percentage grades, with every course counting equally.
+                    The cumulative average matches the "Cumulative GPA" Quest prints: a unit-weighted percentage average that leaves out courses marked "Not in Average" (such as work-term reports).
                 </p>
 
                 <div className="table-wrap">
@@ -61,9 +62,9 @@ class About extends React.Component{
                     Your transcript never leaves your device. The PDF is opened and read by JavaScript in your browser, and there is
                     no server or database. Closing the tab discards everything.
                 </p>
+                </details>
                 <p className="disclaimer">
-                    Unofficial tool, not affiliated with the University of Waterloo or OUAC. Individual schools may calculate GPAs
-                    differently, so check their admission requirements. Forked
+                    Unofficial; not affiliated with UWaterloo or OUAC. Forked
                     from <a href="https://github.com/caseOfCamel/uwaterloo-gpa-calculator">caseOfCamel/uwaterloo-gpa-calculator</a>.
                     Last updated {process.env.REACT_APP_UPDATED}.
                 </p>

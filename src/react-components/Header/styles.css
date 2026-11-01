@@ -8,18 +8,7 @@
     font-weight: 600;
 }
 
-.steps{
-    text-align: start;
-    margin-bottom: 10px;
-}
 
-.steps-header{
-    margin-top: 15px;
-    margin-bottom: 10px;
-    font-size: 30px;
-    font-family: 'Barlow Condensed';
-    font-weight: 600;
-}
 
 .steps-list{
     text-align: left;
@@ -44,13 +33,4 @@ img{
     font-size: 52px;
     margin: 10px 0 0;
     font-weight: 600;
-}
-
-.tagline{
-    font-family: 'Georgia';
-    font-size: 17px;
-    font-weight: normal;
-    color: #444;
-    margin: 8px auto 0;
-    max-width: 640px;
 }

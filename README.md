@@ -15,7 +15,7 @@ This tool reads your Quest unofficial transcript PDF and calculates your cumulat
 - Each percentage grade is converted to the 4.0 scale with OMSAS Scale 3 (90-100 = 4.0, 85-89 = 3.9, 80-84 = 3.7, ...).
 - Each course is weighted by its units (attempted credit), so a 0.75-unit course counts 1.5x a 0.50-unit course.
 - Every numerically graded course counts, including failed courses and work-term reports. CR/NCR courses and courses in progress do not.
-- The unweighted average is the plain mean of the same courses' percentage grades.
+- The cumulative average matches the "Cumulative GPA" Quest prints: unit-weighted, without courses marked "Not in Average".
 
 ## Changes in this fork
 - Upload the transcript PDF directly; copy-protected PDFs are read with [pdf.js](https://mozilla.github.io/pdf.js/) in the browser.

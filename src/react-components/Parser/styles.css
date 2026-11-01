@@ -75,7 +75,6 @@
 }
 
 .status-info{ background: #eef2f7; }
-.status-success{ background: #e7f6ea; }
 .status-error{ background: #fdeaea; color: #8a1c1c; }
 
 .cards{
@@ -119,19 +118,6 @@
     font-family: 'Georgia';
     font-size: 14px;
     color: #666;
-}
-
-.program, .hint{
-    font-family: 'Georgia';
-    color: #555;
-}
-
-.info-card{
-    font-family: 'Georgia';
-    padding: 12px 16px;
-    border: 1px solid #c9d6e8;
-    border-radius: 12px;
-    background: #eef2f7;
 }
 
 .section-header{

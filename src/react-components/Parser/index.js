@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.css";
 import { parseTranscript, TranscriptFormatError } from "../../transcript/parseTranscript";
-import { countsForGpa, percentToGpa, summarize } from "../../transcript/gpa";
+import { countsForGpa, countsForQuestAverage, percentToGpa, summarize } from "../../transcript/gpa";
 
 /**
  * This file contains the transcript input (PDF upload or pasted text) and the GPA results.
@@ -9,14 +9,13 @@ import { countsForGpa, percentToGpa, summarize } from "../../transcript/gpa";
 */
 
 const formatNum = (value, digits) => (value === null ? "–" : value.toFixed(digits));
-const plural = (count, noun) => `${count} ${noun}${count === 1 ? "" : "s"}`;
 
 class Parser extends React.Component{
     constructor(){
         super();
         this.state = {
             transcriptTextArea: "",
-            status: null,       // { kind: "info" | "error" | "success", message }
+            status: null,       // { kind: "info" | "error", message }
             transcript: null,   // result of parseTranscript
             included: {},       // course id -> whether it counts towards the GPA
             dragging: false,
@@ -49,7 +48,7 @@ class Parser extends React.Component{
         if (file) this.handleFile(file);
     }
 
-    // reads an uploaded PDF, unlocking it in the browser if it is copy-protected
+    // reads an uploaded PDF
     async handleFile(file){
         if (!file) return;
         if (file.type !== "application/pdf" && !/\.pdf$/i.test(file.name)){
@@ -60,11 +59,7 @@ class Parser extends React.Component{
         try {
             // pdf.js is only loaded once a PDF is actually chosen
             const { extractPdfText } = await import("../../transcript/pdfText");
-            const { text, wasRestricted } = await extractPdfText(file);
-            const note = wasRestricted
-                ? "The PDF was copy-protected, so it was unlocked in your browser. "
-                : "";
-            this.loadText(text, note);
+            this.loadText(await extractPdfText(file));
         } catch (err){
             const message = err.name === "InvalidPDFException"
                 ? "That file couldn't be read as a PDF. It may be damaged."
@@ -76,23 +71,15 @@ class Parser extends React.Component{
     }
 
     // parses transcript text and checks it is in the expected format
-    loadText(text, unlockNote){
+    loadText(text){
         try {
             const transcript = parseTranscript(text);
             const included = {};
             transcript.courses.forEach(course => { included[course.id] = countsForGpa(course); });
-            const graded = transcript.courses.filter(countsForGpa).length;
-            this.setState({
-                transcript,
-                included,
-                status: {
-                    kind: "success",
-                    message: `${unlockNote || ""}Recognized a UWaterloo unofficial transcript: ${plural(transcript.terms.length, "term")}, ${plural(graded, "graded course")}.`,
-                },
-            });
+            this.setState({transcript, included, status: null});
         } catch (err){
             const message = err instanceof TranscriptFormatError
-                ? `${err.message} Make sure you're using the Undergraduate Unofficial Transcript from Quest.`
+                ? err.message
                 : "Something went wrong reading the transcript.";
             this.setState({status: {kind: "error", message}, transcript: null});
         }
@@ -106,7 +93,10 @@ class Parser extends React.Component{
         const { transcript, included } = this.state;
         const counted = transcript.courses.filter(course => included[course.id] && countsForGpa(course));
         const overall = summarize(counted);
-        const termsWithGrades = transcript.terms.filter(term => term.courses.length > 0);
+        // the "Cumulative GPA" Quest prints: unit-weighted, without courses marked "Not in Average"
+        const cumulativeAvg = summarize(counted.filter(countsForQuestAverage)).avg;
+        // co-op and in-progress terms have nothing to show
+        const termsWithGrades = transcript.terms.filter(term => term.courses.some(countsForGpa));
 
         return (
             <section className="results" aria-live="polite">
@@ -116,8 +106,8 @@ class Parser extends React.Component{
                         <div className="card-value">{formatNum(overall.gpa, 2)}</div>
                     </div>
                     <div className="card">
-                        <div className="card-label">Weighted average</div>
-                        <div className="card-value">{formatNum(overall.avg, 2)}%</div>
+                        <div className="card-label">Cumulative average</div>
+                        <div className="card-value">{formatNum(cumulativeAvg, 2)}%</div>
                     </div>
                     <div className="card">
                         <div className="card-label">Courses counted</div>
@@ -125,21 +115,18 @@ class Parser extends React.Component{
                         <div className="card-sub">{formatNum(overall.units, 2)} units</div>
                     </div>
                 </div>
-                {transcript.program && <p className="program">{transcript.program}</p>}
-                <p className="info-card">Your unweighted average was calculated to be <strong>{formatNum(overall.unweightedAvg, 2)}%</strong>.</p>
 
                 <h3 className="section-header">By term</h3>
-                <p className="hint">Untick a course to see your GPA without it.</p>
                 {termsWithGrades.map(term => {
-                    const termSummary = summarize(term.courses.filter(course => included[course.id] && countsForGpa(course)));
+                    const termCounted = term.courses.filter(course => included[course.id] && countsForGpa(course));
+                    const termSummary = summarize(termCounted);
+                    const termAvg = summarize(termCounted.filter(countsForQuestAverage)).avg;
                     return (
-                        <details className="term" key={term.name} open={termSummary.count > 0}>
+                        <details className="term" key={term.name} open>
                             <summary>
                                 <span className="term-name">{term.name}{term.level ? ` · ${term.level}` : ""}</span>
                                 <span className="term-stats">
-                                    {termSummary.count > 0
-                                        ? `GPA ${formatNum(termSummary.gpa, 2)} · ${formatNum(termSummary.avg, 2)}%`
-                                        : "No graded courses"}
+                                    {`GPA ${formatNum(termSummary.gpa, 2)} · ${formatNum(termAvg, 2)}%`}
                                 </span>
                             </summary>
                             <div className="table-wrap">
@@ -164,8 +151,6 @@ class Parser extends React.Component{
                                                     <td>
                                                         <strong>{course.code}</strong> {course.title}
                                                         {course.topic && <span className="note"> ({course.topic})</span>}
-                                                        {course.excludedReason && <span className="note"> · {course.excludedReason}</span>}
-                                                        {course.notInQuestAverage && <span className="note"> · not in Quest's average, counted by OMSAS</span>}
                                                     </td>
                                                     <td>{course.attempted === null ? "–" : course.attempted.toFixed(2)}</td>
                                                     <td>{course.grade || "–"}</td>
@@ -200,7 +185,7 @@ class Parser extends React.Component{
                         onChange={event => this.handleFile(event.target.files[0])}
                     />
                     <span className="drop-title">Drop your transcript PDF here</span>
-                    <span className="drop-sub">or click to choose a file. Copy-protected PDFs from Quest work fine.</span>
+                    <span className="drop-sub">or click to choose a file</span>
                 </label>
 
                 <details className="paste">

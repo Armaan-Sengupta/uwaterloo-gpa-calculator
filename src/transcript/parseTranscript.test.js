@@ -93,12 +93,6 @@ test("OMSAS GPA weights converted grades by units and includes the work-term rep
     expect(omsas.gpa).toBeCloseTo((2.0 + 2.775 + 1.0 + 0 + 0.351) / 2.13, 6);
 });
 
-test("unweighted average counts every course equally", () => {
-    const t = parseTranscript(SAMPLE);
-    // (92 + 80 + 65 + 49 + 70) / 5
-    expect(summarize(t.courses.filter(countsForGpa)).unweightedAvg).toBeCloseTo(71.2);
-});
-
 test("OMSAS Scale 3 boundaries", () => {
     const cases = [[100, 4.0], [90, 4.0], [89, 3.9], [85, 3.9], [84, 3.7], [80, 3.7], [79, 3.3], [77, 3.3],
         [76, 3.0], [73, 3.0], [72, 2.7], [70, 2.7], [69, 2.3], [67, 2.3], [66, 2.0], [63, 2.0], [62, 1.7],
