@@ -1,27 +1,195 @@
-@import url('https://fonts.googleapis.com/css?family=Barlow+Condensed');
+@import url('https://fonts.googleapis.com/css?family=Barlow+Condensed:400,600&display=swap');
+
+.drop-zone{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: 25px auto 10px;
+    padding: 36px 16px;
+    border: 2px dashed #b5a800;
+    border-radius: 12px;
+    background: #fffbe0;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.drop-zone:hover, .drop-zone:focus-within, .drop-zone-active{
+    background: #fff4a8;
+    border-color: #000;
+}
+
+.drop-zone input{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.drop-title{
+    font-family: 'Barlow Condensed';
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.drop-sub{
+    font-family: 'Georgia';
+    font-size: 15px;
+    color: #555;
+}
+
+.paste summary, .term summary{
+    cursor: pointer;
+}
+
+.paste{
+    font-family: 'Georgia';
+    margin-top: 10px;
+}
 
 .btn-calculate{
-    font-size: 36px;
+    font-size: 28px;
     font-family: 'Barlow Condensed';
-    font-weight: 400;
-    margin-top: 15px;
+    margin-top: 5px;
     font-weight: 600;
 }
 
 .text-area-transcript{
     text-align: start;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 25px;
+    margin-top: 15px;
     margin-bottom: 10px;
-    width: 80%;
+    width: 100%;
+    box-sizing: border-box;
     height: auto;
-    font-size: 18px;
+    font-size: 16px;
 }
 
-.text-output{
+.status{
     font-family: 'Georgia';
-    font-size: 24px;
-    margin-top: 15px;
+    font-size: 16px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.status-info{ background: #eef2f7; }
+.status-success{ background: #e7f6ea; }
+.status-error{ background: #fdeaea; color: #8a1c1c; }
+
+.cards{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.card{
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 14px 16px;
+}
+
+.card-main{
+    background: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+.card-main .card-value{ color: #ffd54f; }
+.card-main .card-sub{ color: #ccc; }
+
+.card-label{
+    font-family: 'Barlow Condensed';
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.card-value{
+    font-family: 'Georgia';
+    font-size: 40px;
+    font-weight: bold;
+    margin: 4px 0;
+}
+
+.card-sub{
+    font-family: 'Georgia';
+    font-size: 14px;
+    color: #666;
+}
+
+.program, .hint{
+    font-family: 'Georgia';
+    color: #555;
+}
+
+.verify{
+    font-family: 'Georgia';
+    padding: 10px 14px;
+    border-radius: 8px;
+}
+
+.verify-ok{ background: #e7f6ea; }
+.verify-warn{ background: #fff4d6; }
+
+.section-header{
+    margin-top: 25px;
+    margin-bottom: 0;
+    font-size: 30px;
+    font-family: 'Barlow Condensed';
+    font-weight: 600;
+}
+
+.term{
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    font-family: 'Georgia';
+}
+
+.term summary{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 17px;
+}
+
+.term-name{ font-weight: bold; }
+.term-stats{ color: #333; }
+
+.table-wrap{
+    overflow-x: auto;
+}
+
+.course-table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 15px;
+}
+
+.course-table th, .course-table td{
+    text-align: left;
+    padding: 6px 8px;
+    border-top: 1px solid #eee;
+    vertical-align: top;
+}
+
+.course-table td:nth-child(n+3), .course-table th:nth-child(n+3){
+    text-align: right;
+    white-space: nowrap;
+}
+
+.row-excluded{
+    color: #999;
+}
+
+.note{
+    font-size: 13px;
+    color: #888;
 }

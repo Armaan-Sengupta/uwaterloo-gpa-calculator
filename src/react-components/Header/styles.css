@@ -40,3 +40,17 @@ img{
     width: 50%;
     max-width: 520px;
 }
+.title{
+    font-size: 52px;
+    margin: 10px 0 0;
+    font-weight: 600;
+}
+
+.tagline{
+    font-family: 'Georgia';
+    font-size: 17px;
+    font-weight: normal;
+    color: #444;
+    margin: 8px auto 0;
+    max-width: 640px;
+}

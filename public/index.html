@@ -2,44 +2,87 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.google.com/specimen/Barlow+Condensed" rel="stylesheet">
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <!-- REACT_APP_YEAR and REACT_APP_UPDATED are set at build time (see .env and the deploy workflow) -->
+    <title>UWaterloo GPA Calculator (%REACT_APP_YEAR%): OMSAS 4.0 GPA from your Quest Transcript PDF</title>
     <meta
       name="description"
-      content="A cumulative GPA calculator for UWaterloo students"
+      content="Free University of Waterloo GPA calculator, updated for %REACT_APP_YEAR%. Drop in your Quest unofficial transcript PDF (copy-protected PDFs work) to get your cumulative GPA on the OMSAS 4.0 scale, your weighted average and a term-by-term breakdown. Runs entirely in your browser."
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <meta name="keywords" content="UWaterloo GPA calculator, University of Waterloo GPA, Waterloo GPA %REACT_APP_YEAR%, OMSAS GPA calculator, 4.0 scale, Quest transcript, cumulative average" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://armaan-sengupta.github.io/uwaterloo-gpa-calculator/" />
+    <meta name="theme-color" content="#000000" />
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>UWaterloo GPA Calculator</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="UWaterloo GPA Calculator" />
+    <meta property="og:title" content="UWaterloo GPA Calculator (%REACT_APP_YEAR%)" />
+    <meta property="og:description" content="Upload your Quest transcript PDF and get your cumulative GPA on the OMSAS 4.0 scale in seconds. Nothing leaves your browser." />
+    <meta property="og:url" content="https://armaan-sengupta.github.io/uwaterloo-gpa-calculator/" />
+    <meta property="og:locale" content="en_CA" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="UWaterloo GPA Calculator (%REACT_APP_YEAR%)" />
+    <meta name="twitter:description" content="Upload your Quest transcript PDF and get your cumulative GPA on the OMSAS 4.0 scale in seconds." />
+
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "UWaterloo GPA Calculator",
+        "url": "https://armaan-sengupta.github.io/uwaterloo-gpa-calculator/",
+        "description": "Calculates a University of Waterloo student's cumulative GPA on the OMSAS 4.0 scale from their Quest unofficial transcript PDF.",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "isAccessibleForFree": true,
+        "dateModified": "%REACT_APP_UPDATED%",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
+        "audience": { "@type": "EducationalAudience", "educationalRole": "student" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How is a University of Waterloo GPA calculated?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "UWaterloo reports percentage grades, not a GPA. To get a 4.0 GPA, each percentage grade is converted with the OMSAS table (Scale 3): 90-100 is 4.0, 85-89 is 3.9, 80-84 is 3.7, 77-79 is 3.3, 73-76 is 3.0, 70-72 is 2.7, 67-69 is 2.3, 63-66 is 2.0, 60-62 is 1.7, 57-59 is 1.3, 53-56 is 1.0, 50-52 is 0.7 and below 50 is 0. Each converted grade is weighted by the course's units, and the total is divided by the total units."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the calculator work with the copy-protected Quest transcript PDF?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Quest's unofficial transcript PDF blocks copying, but the calculator reads it directly in your browser, so you can drop the PDF in without copying or pasting anything. The file is never uploaded."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which courses count towards the GPA?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Every course with a numeric grade counts, including failed courses and work-term reports. Courses graded CR, NCR or another non-numeric grade (such as co-op work terms and PD courses) and courses still in progress are left out."
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      <h1>UWaterloo GPA Calculator</h1>
+      <p>This calculator reads your University of Waterloo Quest unofficial transcript PDF and computes your cumulative GPA on the OMSAS 4.0 scale. You need to enable JavaScript to use it.</p>
+    </noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>

@@ -6,40 +6,27 @@ class Header extends React.Component{
         return(
             <div>
                 <header className="header">
-                    <img src={require('../../img/waterloo_logo.png')} alt=""></img>
-                    Auto-GPA Calculator
+                    <img src={require('../../img/waterloo_logo.png')} alt="University of Waterloo logo"></img>
+                    <h1 className="title">UWaterloo GPA Calculator</h1>
+                    <p className="tagline">
+                        Upload your Quest transcript PDF to get your cumulative GPA on the OMSAS 4.0 scale, with a term-by-term breakdown.
+                    </p>
                 </header>
                 <hr></hr>
                 <div className="steps">
-                    <h3 className="steps-header">Steps</h3>
+                    <h2 className="steps-header">Steps</h2>
                         <ol className="steps-list">
                             <li>Log into <a href="https://uwaterloo.ca/quest/">Quest</a></li>
                             <li>Go to <em><strong>Grades {'->'} My Academics {'->'} Unofficial Transcript</strong></em></li>
-                            <li>Select your applicable Report Type, then click <strong>View Report.</strong> A PDF of your transcript should open automatically. </li>
-                            <li>Here, <strong>copy</strong> the entire transcript: 
-                                <ul>
-                                    <li>
-                                        <em>On Windows: CTRL + A and CTRL + C</em>
-                                    </li>
-                                    <li>
-                                        <em>On Mac: Command + A and Command + C</em>
-                                    </li>
-                                </ul>
-                                Then <strong>paste</strong> your transcript into the box below:
-                                <ul>
-                                    <li>
-                                        <em>On Windows: CTRL + V</em>
-                                    </li>
-                                    <li>
-                                        <em>On Mac: Command + V</em>
-                                    </li>
-                                </ul>
+                            <li>Select your applicable Report Type, then click <strong>View Report</strong> and <strong>save the PDF</strong>.</li>
+                            <li>
+                                <strong>Drop the PDF</strong> into the box below. Quest's copy protection is removed automatically,
+                                and the file is read entirely in your browser. Nothing is uploaded.
                             </li>
-                            <li>Hit <strong>Calculate</strong> to reveal your GPA!</li>
                         </ol>
-                </div> 
+                </div>
             </div>
-            
+
         )
     }
 }

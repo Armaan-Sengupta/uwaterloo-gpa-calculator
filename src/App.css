@@ -22,4 +22,9 @@ table.term-table, .term-table th, .term-table td {
 }
 #disclaimer {
 	color: grey; 
+}@media (max-width: 700px) {
+	body {
+		margin-left: 16px;
+		margin-right: 16px;
+	}
 }

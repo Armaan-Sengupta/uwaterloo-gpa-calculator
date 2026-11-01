@@ -1,0 +1,35 @@
+.about{
+    font-family: 'Georgia';
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top: 40px;
+}
+
+.about-header{
+    font-size: 30px;
+    font-family: 'Barlow Condensed';
+    font-weight: 600;
+    margin: 25px 0 5px;
+}
+
+.scale-table{
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+.scale-table caption{
+    text-align: left;
+    font-weight: bold;
+    padding-bottom: 6px;
+}
+
+.scale-table th, .scale-table td{
+    border: 1px solid #ccc;
+    padding: 4px 14px;
+    text-align: center;
+}
+
+.disclaimer{
+    color: grey;
+    font-size: 14px;
+}

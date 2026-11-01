@@ -1,6 +1,7 @@
 {
   "short_name": "GPA Calc",
   "name": "UWaterloo GPA Calculator",
+  "description": "Cumulative GPA on the OMSAS 4.0 scale from your Quest transcript PDF",
   "icons": [
     {
       "src": "favicon.ico",

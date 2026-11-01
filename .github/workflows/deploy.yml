@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  # rebuild on January 1st so the year in the page title stays current
+  schedule:
+    - cron: "0 6 1 1 *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test -- --watchAll=false
+        env:
+          CI: true
+      - name: Build
+        run: |
+          export REACT_APP_YEAR=$(date -u +%Y)
+          export REACT_APP_UPDATED=$(git log -1 --format=%cs)
+          npm run build
+          sed -i "s#<lastmod>.*</lastmod>#<lastmod>${REACT_APP_UPDATED}</lastmod>#" build/sitemap.xml
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
