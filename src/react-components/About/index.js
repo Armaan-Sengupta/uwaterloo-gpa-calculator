@@ -65,6 +65,9 @@ class About extends React.Component{
                     no server or database. Closing the tab discards everything.
                 </p>
                 </details>
+                <p className="source-link">
+                    <a href="https://github.com/Armaan-Sengupta/uwaterloo-gpa-calculator">View the source code on GitHub</a>
+                </p>
                 <p className="disclaimer">
                     Unofficial; not affiliated with UWaterloo or OUAC. Forked
                     from <a href="https://github.com/caseOfCamel/uwaterloo-gpa-calculator">caseOfCamel/uwaterloo-gpa-calculator</a>.
