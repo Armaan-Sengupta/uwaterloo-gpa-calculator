@@ -6,7 +6,8 @@
 import * as pdfjsLib from "pdfjs-dist";
 import { itemsToLines } from "./textLines";
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
+// the worker is copied into public/ by the "copy-pdf-worker" script; bundling it would run it through Babel and break it
+pdfjsLib.GlobalWorkerOptions.workerSrc = `${process.env.PUBLIC_URL}/pdf.worker.min.js`;
 
 export class PdfPasswordCancelled extends Error {}
 
