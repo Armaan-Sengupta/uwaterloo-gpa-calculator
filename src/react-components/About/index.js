@@ -41,8 +41,7 @@ class About extends React.Component{
                     <li>The cumulative GPA is the total weighted grade points divided by the total units. It is not an average of term GPAs.</li>
                 </ol>
                 <p>
-                    To check that your transcript was read correctly, the calculator also recomputes Quest's own cumulative average
-                    (which leaves out courses marked "Not in Average") and compares it with the number printed on your transcript.
+                    The unweighted average is the plain mean of the same courses' percentage grades, with every course counting equally.
                 </p>
 
                 <div className="table-wrap">

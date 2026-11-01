@@ -1,15 +1,12 @@
 import React from "react";
 import "./styles.css";
 import { parseTranscript, TranscriptFormatError } from "../../transcript/parseTranscript";
-import { countsForGpa, countsForQuestAverage, percentToGpa, summarize } from "../../transcript/gpa";
+import { countsForGpa, percentToGpa, summarize } from "../../transcript/gpa";
 
 /**
  * This file contains the transcript input (PDF upload or pasted text) and the GPA results.
  * Everything runs in the browser: the transcript is never uploaded anywhere.
 */
-
-// Quest rounds its printed averages, so allow a little slack when comparing against them
-const REPORTED_AVG_TOLERANCE = 0.02;
 
 const formatNum = (value, digits) => (value === null ? "–" : value.toFixed(digits));
 const plural = (count, noun) => `${count} ${noun}${count === 1 ? "" : "s"}`;
@@ -105,22 +102,6 @@ class Parser extends React.Component{
         this.setState(state => ({included: {...state.included, [id]: !state.included[id]}}));
     }
 
-    renderVerification(transcript){
-        const questAvg = summarize(transcript.courses.filter(countsForQuestAverage)).avg;
-        if (transcript.reportedCumulativeAvg === null || questAvg === null) return null;
-        const matches = Math.abs(questAvg - transcript.reportedCumulativeAvg) <= REPORTED_AVG_TOLERANCE;
-        return (
-            <p className={`verify ${matches ? "verify-ok" : "verify-warn"}`}>
-                {matches ? "✓ " : "⚠ "}
-                Quest's cumulative average on your transcript is <strong>{transcript.reportedCumulativeAvg.toFixed(2)}%</strong>;
-                recomputed from your courses it is <strong>{questAvg.toFixed(2)}%</strong>.
-                {matches
-                    ? " Every course was read correctly."
-                    : " Some courses may not have been read correctly. Check the table below."}
-            </p>
-        );
-    }
-
     renderResults(){
         const { transcript, included } = this.state;
         const counted = transcript.courses.filter(course => included[course.id] && countsForGpa(course));
@@ -133,12 +114,10 @@ class Parser extends React.Component{
                     <div className="card card-main">
                         <div className="card-label">Cumulative GPA (OMSAS 4.0)</div>
                         <div className="card-value">{formatNum(overall.gpa, 2)}</div>
-                        <div className="card-sub">{formatNum(overall.gpa, 3)} unrounded</div>
                     </div>
                     <div className="card">
                         <div className="card-label">Weighted average</div>
                         <div className="card-value">{formatNum(overall.avg, 2)}%</div>
-                        <div className="card-sub">same courses as the GPA</div>
                     </div>
                     <div className="card">
                         <div className="card-label">Courses counted</div>
@@ -147,7 +126,7 @@ class Parser extends React.Component{
                     </div>
                 </div>
                 {transcript.program && <p className="program">{transcript.program}</p>}
-                {this.renderVerification(transcript)}
+                <p className="info-card">Your unweighted average was calculated to be <strong>{formatNum(overall.unweightedAvg, 2)}%</strong>.</p>
 
                 <h3 className="section-header">By term</h3>
                 <p className="hint">Untick a course to see your GPA without it.</p>

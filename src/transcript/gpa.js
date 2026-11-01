@@ -52,15 +52,23 @@ export function countsForQuestAverage(course){
 /**
  * Computes the unit-weighted percentage average and OMSAS GPA over a set of courses
  * @param {Array<object>} courses Courses with numericGrade and attempted units
- * @returns {{units: number, count: number, avg: number|null, gpa: number|null}}
+ * @returns {{units: number, count: number, avg: number|null, unweightedAvg: number|null, gpa: number|null}}
  */
 export function summarize(courses){
-    let units = 0, percentTotal = 0, gpaTotal = 0;
+    let units = 0, percentTotal = 0, gpaTotal = 0, plainTotal = 0;
     courses.forEach(course => {
         units += course.attempted;
+        plainTotal += course.numericGrade;
         percentTotal += course.numericGrade * course.attempted;
         gpaTotal += percentToGpa(course.numericGrade) * course.attempted;
     });
-    if (units === 0) return { units: 0, count: 0, avg: null, gpa: null };
-    return { units, count: courses.length, avg: percentTotal / units, gpa: gpaTotal / units };
+    if (units === 0) return { units: 0, count: 0, avg: null, unweightedAvg: null, gpa: null };
+    return {
+        units,
+        count: courses.length,
+        avg: percentTotal / units,
+        // plain mean of the percentage grades, every course counting equally
+        unweightedAvg: plainTotal / courses.length,
+        gpa: gpaTotal / units,
+    };
 }
