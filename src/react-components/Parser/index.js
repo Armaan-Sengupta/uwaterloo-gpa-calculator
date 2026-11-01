@@ -12,6 +12,7 @@ import { countsForGpa, countsForQuestAverage, percentToGpa, summarize } from "..
 const REPORTED_AVG_TOLERANCE = 0.02;
 
 const formatNum = (value, digits) => (value === null ? "–" : value.toFixed(digits));
+const plural = (count, noun) => `${count} ${noun}${count === 1 ? "" : "s"}`;
 
 class Parser extends React.Component{
     constructor(){
@@ -89,7 +90,7 @@ class Parser extends React.Component{
                 included,
                 status: {
                     kind: "success",
-                    message: `${unlockNote || ""}Recognized a UWaterloo unofficial transcript: ${transcript.terms.length} terms, ${graded} graded courses.`,
+                    message: `${unlockNote || ""}Recognized a UWaterloo unofficial transcript: ${plural(transcript.terms.length, "term")}, ${plural(graded, "graded course")}.`,
                 },
             });
         } catch (err){
