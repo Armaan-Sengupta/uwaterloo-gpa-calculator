@@ -5,14 +5,18 @@ import Parser from './react-components/Parser'
 import About from './react-components/About'
 
 class App extends React.Component{
+  constructor(){
+    super();
+    this.state = { termGpas: [] };
+  }
 
   render(){
     return(
       <div>
         <Header />
         <main>
-          <Parser />
-          <About />
+          <Parser onTermGpas={termGpas => this.setState({ termGpas })} />
+          <About termGpas={this.state.termGpas} />
         </main>
       </div>
     )

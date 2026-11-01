@@ -89,6 +89,28 @@ class Parser extends React.Component{
         this.setState(state => ({included: {...state.included, [id]: !state.included[id]}}));
     }
 
+    // tells the parent each term's GPA whenever the transcript or the selected courses change
+    componentDidUpdate(prevProps, prevState){
+        const { transcript, included } = this.state;
+        if (!this.props.onTermGpas || (transcript === prevState.transcript && included === prevState.included)) return;
+        if (!transcript){
+            this.props.onTermGpas([]);
+            return;
+        }
+        const points = transcript.terms
+            .map(term => {
+                const counted = term.courses.filter(course => included[course.id] && countsForGpa(course));
+                return {
+                    term: term.name,
+                    level: term.level,
+                    gpa: summarize(counted).gpa,
+                    avg: summarize(counted.filter(countsForQuestAverage)).avg,
+                };
+            })
+            .filter(point => point.gpa !== null && point.avg !== null);
+        this.props.onTermGpas(points);
+    }
+
     renderResults(){
         const { transcript, included } = this.state;
         const counted = transcript.courses.filter(course => included[course.id] && countsForGpa(course));

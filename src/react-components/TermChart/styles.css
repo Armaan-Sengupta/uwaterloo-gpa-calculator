@@ -1,0 +1,78 @@
+.term-chart{
+    margin: 15px 0;
+    max-width: 640px;
+}
+
+.term-chart-title{
+    font-weight: bold;
+    padding-bottom: 6px;
+}
+
+.term-chart-plot{
+    position: relative;
+}
+
+.term-chart svg{
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.term-chart .grid{
+    stroke: #e6e6e6;
+    stroke-width: 1;
+}
+
+.term-chart .axis{
+    font-family: 'Georgia';
+    font-size: 13px;
+    fill: #666;
+}
+
+.term-chart .line{
+    fill: none;
+    stroke: #000;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+.term-chart .dot{
+    fill: #000;
+    stroke: #fff;
+    stroke-width: 2;
+}
+
+.term-chart .dot-active{
+    fill: #b5a800;
+}
+
+.term-chart .value{
+    font-family: 'Georgia';
+    font-size: 13px;
+    font-weight: bold;
+    fill: #222;
+}
+
+.term-chart .hit{
+    fill: transparent;
+    cursor: pointer;
+    outline: none;
+}
+
+.term-chart-tip{
+    position: absolute;
+    transform: translate(-50%, calc(-100% - 12px));
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 10px;
+    background: #000;
+    color: #fff;
+    border-radius: 6px;
+    font-family: 'Georgia';
+    font-size: 13px;
+    white-space: nowrap;
+    pointer-events: none;
+}

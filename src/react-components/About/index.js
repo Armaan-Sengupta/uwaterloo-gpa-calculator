@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles.css";
 import { OMSAS_SCALE } from "../../transcript/gpa";
+import TermChart from "../TermChart";
 
 /**
  * Explains how the GPA is calculated, so users can check the method (and so search engines have real content to index).
@@ -45,6 +46,7 @@ class About extends React.Component{
                     The cumulative average matches the "Cumulative GPA" Quest prints: a unit-weighted percentage average that leaves out courses marked "Not in Average" (such as work-term reports).
                 </p>
 
+                <TermChart points={this.props.termGpas} />
                 <div className="table-wrap">
                     <table className="scale-table">
                         <caption>OMSAS conversion, Scale 3</caption>
